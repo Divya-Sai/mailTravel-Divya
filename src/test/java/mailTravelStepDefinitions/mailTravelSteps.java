@@ -6,17 +6,22 @@ import io.cucumber.java.Scenario;
 import io.cucumber.java.en.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import mailTravelPages.*;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.asserts.Assertion;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class mailTravelSteps  {
@@ -26,25 +31,28 @@ public class mailTravelSteps  {
     HomePage hmPage;
     TravelPage travelPage;
     NowBookingPage nowBookingPage;
+
     @Before
     public void setup() throws IOException
     {
+
+
         //Reading config.properties (for browser)
         FileReader file=new FileReader(System.getProperty("user.dir")+"\\src\\test\\resources\\config.properties");
         p=new Properties();
         p.load(file);
         br=p.getProperty("browser");
 
-        if(br.equals("chrome"))
+        if(br.equalsIgnoreCase("chrome"))
         {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         }
-        else if (br.equals("firefox")) {
+        else if (br.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
-        else if (br.equals("edge")) {
+        else if (br.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         }
